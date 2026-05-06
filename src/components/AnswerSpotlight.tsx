@@ -1,4 +1,4 @@
-import type { RoomState } from '../types';
+import type { RoomState, OddOneOutQuestion } from '../types';
 import { renderAnswer } from './ReviewPanel';
 
 interface Props {
@@ -76,6 +76,16 @@ export default function AnswerSpotlight({ roomState, onCastVote, myPlayerId }: P
     return (
       <div className="answer-spotlight answer-spotlight--waiting">
         <div className="spotlight-label">Reviewing answers…</div>
+        {cq.question.type === 'odd-one-out' && roomState.phase === 'reviewing' && (
+          <div className="spotlight-odd-prompts">
+            <div className="spotlight-odd-prompts__row">
+              <strong>The question:</strong> {cq.question.prompt}
+            </div>
+            <div className="spotlight-odd-prompts__row">
+              <strong>The odd question:</strong> {(cq.question as OddOneOutQuestion).oddPrompt}
+            </div>
+          </div>
+        )}
         {isWaveReview && waveState && (
           <div className="spotlight-wave">Wave {waveState.currentWave + 1} of {waveState.totalWaves}</div>
         )}
@@ -88,6 +98,18 @@ export default function AnswerSpotlight({ roomState, onCastVote, myPlayerId }: P
       <div className="spotlight-label">
         {isWaveReview ? `Wave ${(waveState?.currentWave ?? 0) + 1} answer` : 'Reviewing'}
       </div>
+
+      {/* Show both question prompts for odd-one-out during reviewing */}
+      {cq.question.type === 'odd-one-out' && roomState.phase === 'reviewing' && (
+        <div className="spotlight-odd-prompts">
+          <div className="spotlight-odd-prompts__row">
+            <strong>The question:</strong> {cq.question.prompt}
+          </div>
+          <div className="spotlight-odd-prompts__row">
+            <strong>The odd question:</strong> {(cq.question as OddOneOutQuestion).oddPrompt}
+          </div>
+        </div>
+      )}
 
       {/* Original question image for memefy questions */}
       {cq.question.type === 'memefy' && 'imageUrl' in cq.question && (

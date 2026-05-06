@@ -786,6 +786,17 @@ textarea.input { resize: vertical; min-height: 80px; }
 .review-correct-label { font-size: 12px; color: var(--success); font-weight: 600; text-transform: uppercase; }
 .review-correct-value { font-size: 15px; color: var(--text); font-weight: 600; }
 .review-start { text-align: center; display: flex; flex-direction: column; gap: 12px; align-items: center; }
+.review-question-prompt {
+  background: var(--bg3); border-radius: var(--radius-sm); padding: 10px 14px;
+  font-size: 14px; color: var(--text); display: flex; flex-direction: column; gap: 4px;
+}
+.review-odd-reveal {
+  background: rgba(219,39,119,0.08); border: 1px solid rgba(219,39,119,0.3);
+  border-radius: var(--radius-sm); padding: 12px 16px;
+  display: flex; flex-direction: column; gap: 6px; text-align: left; width: 100%;
+}
+.review-odd-reveal__row { font-size: 14px; color: var(--text); }
+.review-odd-reveal__label { font-weight: 700; color: #db2777; margin-right: 6px; }
 .review-current { display: flex; flex-direction: column; gap: 12px; }
 .review-player-name { font-family: 'Oswald', sans-serif; font-size: 22px; color: var(--accent); }
 .review-answer-display {
@@ -897,6 +908,12 @@ textarea.input { resize: vertical; min-height: 80px; }
   align-items: center; gap: 16px;
 }
 .answer-spotlight--waiting { opacity: 0.7; }
+.spotlight-odd-prompts {
+  background: rgba(219,39,119,0.08); border: 1px solid rgba(219,39,119,0.3);
+  border-radius: var(--radius-sm); padding: 10px 14px;
+  display: flex; flex-direction: column; gap: 5px; width: 100%; text-align: left;
+}
+.spotlight-odd-prompts__row { font-size: 13px; color: var(--text); }
 .spotlight-label {
   font-family: 'Oswald', sans-serif; font-size: 16px; color: var(--primary);
   text-transform: uppercase; letter-spacing: 0.1em;
@@ -1004,6 +1021,10 @@ textarea.input { resize: vertical; min-height: 80px; }
   max-width: 100%; max-height: 220px; object-fit: contain;
   border-radius: var(--radius-sm); align-self: center;
   border: 2px solid var(--border);
+}
+.voting-view__question-prompt {
+  background: var(--bg3); border-radius: var(--radius-sm); padding: 10px 14px;
+  font-size: 14px; color: var(--text); display: flex; flex-direction: column; gap: 4px;
 }
 .voting-view__voted-msg {
   text-align: center; padding: 12px 20px; background: rgba(0,230,118,0.1);

@@ -1,4 +1,4 @@
-import type { RoomState, PlayerAnswer, AnswerValue, Question, TimelineQuestion, MultipleChoiceQuestion, EitherOrQuestion } from '../types';
+import type { RoomState, PlayerAnswer, AnswerValue, Question, TimelineQuestion, MultipleChoiceQuestion, EitherOrQuestion, OddOneOutQuestion } from '../types';
 
 interface Props {
   roomState: RoomState;
@@ -59,6 +59,7 @@ export default function ReviewPanel({ roomState, myPlayerId, onGrade, onNext, on
   const players = roomState.players.filter(p => !p.isHost);
   const waveState = cq.waveState;
   const isWaveReview = waveState?.isReviewingWave ?? false;
+  const isHost = roomState.players.find(p => p.id === myPlayerId)?.isHost ?? true;
 
   // ── Voting phase ──────────────────────────────────────────────────
   if (cq.phase === 'voting') {
@@ -84,9 +85,16 @@ export default function ReviewPanel({ roomState, myPlayerId, onGrade, onNext, on
           <img src={(q as any).imageUrl} className="review-question-img" alt="question" />
         )}
 
-        {/* Show the question prompt above answers */}
+        {/* Show the question prompt(s) above answers */}
         <div className="review-question-prompt">
-          <strong>Question:</strong> {q.prompt}
+          {q.type === 'odd-one-out' ? (
+            <>
+              <div><strong>Main question:</strong> {q.prompt}</div>
+              <div><strong>Odd question:</strong> {(q as OddOneOutQuestion).oddPrompt}</div>
+            </>
+          ) : (
+            <><strong>Question:</strong> {q.prompt}</>
+          )}
         </div>
 
         {!winnerAnswer ? (
@@ -100,7 +108,7 @@ export default function ReviewPanel({ roomState, myPlayerId, onGrade, onNext, on
               {cq.answers.map(a => {
                 const player = players.find(p => p.id === a.playerId);
                 const isOwn = a.playerId === myPlayerId;
-                const canVote = !hasVoted && !isOwn;
+                const canVote = !hasVoted && !isOwn && !(q.type === 'odd-one-out' && isHost);
                 return (
                   <div
                     key={a.playerId}
@@ -256,6 +264,16 @@ export default function ReviewPanel({ roomState, myPlayerId, onGrade, onNext, on
 
       {reviewIndex === -1 ? (
         <div className="review-start">
+          {q.type === 'odd-one-out' && (
+            <div className="review-odd-reveal">
+              <div className="review-odd-reveal__row">
+                <span className="review-odd-reveal__label">Main question:</span> {q.prompt}
+              </div>
+              <div className="review-odd-reveal__row">
+                <span className="review-odd-reveal__label">Odd question:</span> {(q as OddOneOutQuestion).oddPrompt}
+              </div>
+            </div>
+          )}
           {totalAnswers === 0
             ? <p>No answers submitted.</p>
             : <p>{totalAnswers} answer{totalAnswers !== 1 ? 's' : ''}. Review one by one.</p>

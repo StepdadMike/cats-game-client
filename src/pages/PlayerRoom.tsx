@@ -8,7 +8,7 @@ import AnswerInput from '../components/AnswerInput';
 import AnswerSpotlight from '../components/AnswerSpotlight';
 import GameOverScreen from '../components/GameOverScreen';
 import { renderAnswer } from '../components/ReviewPanel';
-import type { AnswerValue, RoomState } from '../types';
+import type { AnswerValue, RoomState, OddOneOutQuestion } from '../types';
 
 export default function PlayerRoom() {
   const { seed } = useParams<{ seed: string }>();
@@ -295,9 +295,16 @@ function VotingView({ roomState, myPlayerId, onVote }: {
         <img src={(q as any).imageUrl} className="voting-view__question-img" alt="meme template" />
       )}
 
-      {/* Show the question prompt above answers */}
+      {/* Show the question prompt(s) above answers */}
       <div className="voting-view__question-prompt">
-        <strong>Question:</strong> {q.prompt}
+        {q.type === 'odd-one-out' ? (
+          <>
+            <div><strong>Main question:</strong> {q.prompt}</div>
+            <div><strong>Odd question:</strong> {(q as OddOneOutQuestion).oddPrompt}</div>
+          </>
+        ) : (
+          <><strong>Question:</strong> {q.prompt}</>
+        )}
       </div>
 
       {!winnerAnswer ? (
