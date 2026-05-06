@@ -85,16 +85,9 @@ export default function ReviewPanel({ roomState, myPlayerId, onGrade, onNext, on
           <img src={(q as any).imageUrl} className="review-question-img" alt="question" />
         )}
 
-        {/* Show the question prompt(s) above answers */}
+        {/* Show the question prompt above answers */}
         <div className="review-question-prompt">
-          {q.type === 'odd-one-out' ? (
-            <>
-              <div><strong>Main question:</strong> {q.prompt}</div>
-              <div><strong>Odd question:</strong> {(q as OddOneOutQuestion).oddPrompt}</div>
-            </>
-          ) : (
-            <><strong>Question:</strong> {q.prompt}</>
-          )}
+          <strong>Question:</strong> {q.prompt}
         </div>
 
         {!winnerAnswer ? (
@@ -267,10 +260,7 @@ export default function ReviewPanel({ roomState, myPlayerId, onGrade, onNext, on
           {q.type === 'odd-one-out' && (
             <div className="review-odd-reveal">
               <div className="review-odd-reveal__row">
-                <span className="review-odd-reveal__label">Main question:</span> {q.prompt}
-              </div>
-              <div className="review-odd-reveal__row">
-                <span className="review-odd-reveal__label">Odd question:</span> {(q as OddOneOutQuestion).oddPrompt}
+                <span className="review-odd-reveal__label">The question:</span> {q.prompt}
               </div>
             </div>
           )}
