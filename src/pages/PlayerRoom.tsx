@@ -295,6 +295,11 @@ function VotingView({ roomState, myPlayerId, onVote }: {
         <img src={(q as any).imageUrl} className="voting-view__question-img" alt="meme template" />
       )}
 
+      {/* Show the question prompt above answers */}
+      <div className="voting-view__question-prompt">
+        <strong>Question:</strong> {q.prompt}
+      </div>
+
       {!winnerAnswer ? (
         <>
           {hasVoted ? (

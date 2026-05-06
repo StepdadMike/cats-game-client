@@ -84,6 +84,11 @@ export default function ReviewPanel({ roomState, myPlayerId, onGrade, onNext, on
           <img src={(q as any).imageUrl} className="review-question-img" alt="question" />
         )}
 
+        {/* Show the question prompt above answers */}
+        <div className="review-question-prompt">
+          <strong>Question:</strong> {q.prompt}
+        </div>
+
         {!winnerAnswer ? (
           <>
             <p style={{ fontSize: 13, color: 'var(--text2)', marginBottom: 4 }}>
