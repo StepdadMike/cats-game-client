@@ -74,7 +74,9 @@ export default function ReviewPanel({ roomState, myPlayerId, onGrade, onNext, on
     return (
       <div className="review-panel">
         <div className="review-panel__header">
-          <h3 className="review-title">🗳️ Voting</h3>
+          <h3 className="review-title">
+            {q.type === 'odd-one-out' ? '🗳️ Vote for the Odd One Out' : '🗳️ Voting'}
+          </h3>
           <div className="review-progress">{votesIn} / {totalVoters} voted</div>
         </div>
 
@@ -85,7 +87,9 @@ export default function ReviewPanel({ roomState, myPlayerId, onGrade, onNext, on
         {!winnerAnswer ? (
           <>
             <p style={{ fontSize: 13, color: 'var(--text2)', marginBottom: 4 }}>
-              {hasVoted ? '✓ Your vote is in! Waiting for others…' : 'Click an answer to vote:'}
+              {hasVoted ? '✓ Your vote is in! Waiting for others…' : q.type === 'odd-one-out'
+                ? "Click the answer to vote for the player who had the different question."
+                : 'Click an answer to vote:'}
             </p>
             <div className="voting-gallery">
               {cq.answers.map(a => {
@@ -206,7 +210,7 @@ export default function ReviewPanel({ roomState, myPlayerId, onGrade, onNext, on
 
   // ── Standard final review ─────────────────────────────────────────
   const isAutoGraded = q.type === 'multiple-choice' || q.type === 'either-or' || q.type === 'timeline';
-  const isHostPicks = q.type === 'memefy' || q.type === 'draw-this';
+  const isHostPicks = q.type === 'memefy' || q.type === 'draw-this' || q.type === 'odd-one-out';
   const totalAnswers = cq.answers.length;
   const reviewIndex = cq.reviewIndex;
   const currentAnswer: PlayerAnswer | undefined = cq.answers[reviewIndex];

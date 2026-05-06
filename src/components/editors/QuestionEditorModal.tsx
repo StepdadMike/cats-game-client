@@ -9,6 +9,7 @@ import GuessAudioEditor from './GuessAudioEditor';
 import DrawThisEditor from './DrawThisEditor';
 import EitherOrEditor from './EitherOrEditor';
 import MemefyEditor from './MemefyEditor';
+import OddOneOutEditor from './OddOneOutEditor';
 import TimelineEditor from './TimelineEditor';
 
 interface Props {
@@ -81,6 +82,12 @@ export default function QuestionEditorModal({ cell, initialType, points, onSave,
         question = {
           ...base, type: 'memefy',
           imageUrl: (typeData as any).imageUrl ?? '',
+        };
+        break;
+      case 'odd-one-out':
+        question = {
+          ...base, type: 'odd-one-out',
+          oddPrompt: (typeData as any).oddPrompt ?? '',
         };
         break;
       case 'timeline':
@@ -168,6 +175,9 @@ export default function QuestionEditorModal({ cell, initialType, points, onSave,
           )}
           {type === 'memefy' && (
             <MemefyEditor data={typeData as any} onChange={updateTypeData} />
+          )}
+          {type === 'odd-one-out' && (
+            <OddOneOutEditor data={typeData as any} onChange={updateTypeData} />
           )}
           {type === 'timeline' && (
             <TimelineEditor data={typeData as any} onChange={updateTypeData} />

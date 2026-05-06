@@ -4,19 +4,37 @@ interface Props {
   question: Question;
   waveState?: WaveState;
   myPlayerId?: string | null;
+  oddPlayerId?: string | null;
 }
 
-export default function QuestionDisplay({ question, waveState, myPlayerId }: Props) {
+export default function QuestionDisplay({ question, waveState, myPlayerId, oddPlayerId }: Props) {
+  const prompt = question.type === 'odd-one-out' && myPlayerId && oddPlayerId && myPlayerId === oddPlayerId
+    ? ((question as any).oddPrompt || question.prompt)
+    : question.prompt;
+
   return (
     <div className="question-display">
-      <div className="question-prompt">{question.prompt}</div>
+      <div className="question-prompt">{prompt}</div>
       <div className="question-points">{question.points} points</div>
-      <QuestionBody question={question} waveState={waveState} myPlayerId={myPlayerId} />
+      <QuestionBody question={question} waveState={waveState} myPlayerId={myPlayerId} oddPlayerId={oddPlayerId} />
     </div>
   );
 }
 
-function QuestionBody({ question, waveState, myPlayerId }: Props) {
+function QuestionBody({ question, waveState, myPlayerId, oddPlayerId }: Props) {
+  if (question.type === 'odd-one-out') {
+    const isOddPlayer = myPlayerId && oddPlayerId && myPlayerId === oddPlayerId;
+    return (
+      <div className="odd-one-out-display">
+        <div className="odd-one-out-note">
+          {isOddPlayer
+            ? 'You have the secret question — answer honestly and don’t give yourself away!'
+            : 'Answer the shared question and try to spot the odd one out.'}
+        </div>
+      </div>
+    );
+  }
+
   switch (question.type) {
     case 'multiple-choice':
       return question.imageUrl ? (

@@ -10,7 +10,8 @@ export type QuestionType =
   | 'draw-this'
   | 'either-or'
   | 'memefy'
-  | 'timeline';
+  | 'timeline'
+  | 'odd-one-out';
 
 export const QUESTION_TYPE_LABELS: Record<QuestionType, string> = {
   'multiple-choice': 'Multiple Choice',
@@ -21,6 +22,7 @@ export const QUESTION_TYPE_LABELS: Record<QuestionType, string> = {
   'either-or':       'Either Or',
   'memefy':          'Memefy',
   'timeline':        'Timeline',
+  'odd-one-out':     'Odd One Out',
 };
 
 export const QUESTION_TYPE_COLORS: Record<QuestionType, string> = {
@@ -32,6 +34,7 @@ export const QUESTION_TYPE_COLORS: Record<QuestionType, string> = {
   'either-or':       '#f97316',
   'memefy':          '#06b6d4',
   'timeline':        '#84cc16',
+  'odd-one-out':     '#db2777',
 };
 
 export const QUESTION_DEFAULT_TIME: Record<QuestionType, number> = {
@@ -43,6 +46,7 @@ export const QUESTION_DEFAULT_TIME: Record<QuestionType, number> = {
   'either-or':       20,
   'memefy':          60,
   'timeline':        60,
+  'odd-one-out':     60,
 };
 
 // ─────────────────────────────────────────────
@@ -108,6 +112,11 @@ export interface MemefyQuestion extends BaseQuestion {
   // prompt is the scenario or caption context; host picks funniest
 }
 
+export interface OddOneOutQuestion extends BaseQuestion {
+  type: 'odd-one-out';
+  oddPrompt: string;
+}
+
 export interface TimelineEvent {
   id: string;
   label: string;
@@ -126,6 +135,7 @@ export type Question =
   | DrawThisQuestion
   | EitherOrQuestion
   | MemefyQuestion
+  | OddOneOutQuestion
   | TimelineQuestion;
 
 // ─────────────────────────────────────────────
@@ -220,6 +230,7 @@ export interface CurrentQuestion {
   waveState?: WaveState;      // only for guess-waves
   allAnswered: boolean;
   votesSubmitted?: string[];  // playerIds who have voted (for voting phase)
+  oddPlayerId?: string;
 }
 
 // ─────────────────────────────────────────────

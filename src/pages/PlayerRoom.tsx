@@ -192,7 +192,7 @@ export default function PlayerRoom() {
       {/* Active question answering */}
       {isAnswering && !isWaveReviewing && q && (
         <div className="player-question-area">
-          <QuestionDisplay question={q} waveState={waveState} myPlayerId={myPlayerId} />
+          <QuestionDisplay question={q} waveState={waveState} myPlayerId={myPlayerId} oddPlayerId={cq?.oddPlayerId ?? null} />
 
           {/* Answer input — normal questions */}
           {!hasAnswered && q.type !== 'guess-waves' && (
@@ -285,7 +285,9 @@ function VotingView({ roomState, myPlayerId, onVote }: {
   return (
     <div className="voting-view">
       <div className="voting-view__header">
-        <span className="voting-view__title">🗳️ Vote for the Best!</span>
+        <span className="voting-view__title">
+          {q.type === 'odd-one-out' ? '🗳️ Vote for the Odd One Out!' : '🗳️ Vote for the Best!'}
+        </span>
         <span className="voting-view__progress">{votesIn} / {totalVoters} voted</span>
       </div>
 
@@ -299,9 +301,11 @@ function VotingView({ roomState, myPlayerId, onVote }: {
             <div className="voting-view__voted-msg">✓ Vote cast! Waiting for others…</div>
           ) : (
             <p className="voting-view__subtitle">
-              {iAmAnswerer
-                ? "Pick your favourite — you can't vote for your own!"
-                : 'Pick the best answer!'}
+              {q.type === 'odd-one-out'
+                ? "Select the player you think got the odd question. You can't vote for yourself."
+                : iAmAnswerer
+                  ? "Pick your favourite — you can't vote for your own!"
+                  : 'Pick the best answer!'}
             </p>
           )}
           <div className="voting-view__grid">
