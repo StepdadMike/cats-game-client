@@ -7,7 +7,7 @@ import type { ClientMessage, ServerMessage, RoomState, Player } from '../types';
 const SERVER_URL = import.meta.env.VITE_WS_URL;
 const WS_URL = SERVER_URL
   ? SERVER_URL
-  : `${window.location.protocol === 'https:' ? 'wss' : 'ws'}://${window.location.hostname}:3001/ws`;
+  : 'wss://server.cats-game.com/ws';
 
 interface WSCtx {
   isConnected: boolean;

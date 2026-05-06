@@ -12,7 +12,10 @@ React-based frontend for the Party Game application.
 2. Deploy: `vercel deploy`
 
 ### Coolify
-1. Set environment variable `VITE_WS_URL` to your server URL
+1. Set environment variable `VITE_WS_URL` to your server URL, for example:
+   ```bash
+   VITE_WS_URL=wss://server.cats-game.com/ws
+   ```
 2. Build command: `npm install && npm run build`
 3. Output directory: `dist`
 4. Start command: Not needed (static site)
