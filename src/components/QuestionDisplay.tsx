@@ -77,6 +77,9 @@ function QuestionBody({ question, waveState, myPlayerId, oddPlayerId }: Props) {
           {currentHint.type === 'drawing' && (
             <img src={currentHint.content} className="question-image wb-hint" alt="drawing hint" />
           )}
+          {currentHint.type === 'text' && (
+            <div className="wave-text-hint">{currentHint.content}</div>
+          )}
           <div className="buzz-indicator">
             {(waveState.awaitingBuzzAnswers ?? []).includes(myPlayerId ?? '')
               ? <span className="buzzed-badge">You buzzed in — answer now!</span>

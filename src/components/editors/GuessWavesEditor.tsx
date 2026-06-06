@@ -61,6 +61,15 @@ export default function GuessWavesEditor({ data, onChange }: Props) {
               onDraw={data => updateHint(hint.id, data)}
             />
           )}
+          {hint.type === 'text' && (
+            <textarea
+              className="input"
+              rows={3}
+              value={hint.content}
+              onChange={e => updateHint(hint.id, e.target.value)}
+              placeholder="Type the hint text…"
+            />
+          )}
         </div>
       ))}
 
@@ -68,6 +77,7 @@ export default function GuessWavesEditor({ data, onChange }: Props) {
         <button className="btn btn--ghost btn--sm" onClick={() => addHint('image')}>+ Image hint</button>
         <button className="btn btn--ghost btn--sm" onClick={() => addHint('audio')}>+ Audio hint</button>
         <button className="btn btn--ghost btn--sm" onClick={() => addHint('drawing')}>+ Drawing hint</button>
+        <button className="btn btn--ghost btn--sm" onClick={() => addHint('text')}>+ Text hint</button>
       </div>
 
       <label className="field-label" style={{ marginTop: 16 }}>

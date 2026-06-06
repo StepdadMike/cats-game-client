@@ -68,7 +68,7 @@ export interface MultipleChoiceQuestion extends BaseQuestion {
   imageUrl?: string;     // optional image shown with the question
 }
 
-export type HintType = 'image' | 'audio' | 'drawing';
+export type HintType = 'image' | 'audio' | 'drawing' | 'text';
 
 export interface WaveHint {
   id: string;
